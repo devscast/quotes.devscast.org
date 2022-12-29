@@ -26,8 +26,8 @@ class Citation
     #[Assert\NotBlank()]
     private ?string $english;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotNull]
+    #[ORM\Column(length: 50)]
+    #[Assert\NotNull()]
     private ?string $author;
 
     #[ORM\Column]

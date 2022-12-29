@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Devscast - Citation!{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        {% if not citations.items is same as([]) %}
+        <h1>Mes citations</h1>
+
+            <a href="{{ path('citation.new') }}" class="btn btn-primary mt-4">
+                Créer une citation
+            </a>
+
+            {# read and display just one flash message type #}
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success mt-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            <table class="table mt-4">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">French</th>
+                    <th scope="col">English</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for citation in citations %}
+                    <tr class="table-primary">
+                        <th scope="row">{{ citation.id }}</th>
+                        <td>{{ citation.french }}</td>
+                        <td>{{ citation.english }}</td>
+                        <td>{{ citation.createdAt|date("d/m/Y") }}</td>
+                        <td>
+                            <a href="{{ path('citation.edit', { id: citation.id }) }}" class="btn btn-info">
+                                Edit
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('citation.delete', { id: citation.id }) }}" class="btn btn-danger">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        {# display navigation #}
+        <div class="navigation d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(citations) }}
+        </div>
+        {% else %}
+        <h4>Il n'y a pas des citations</h4>
+        {% endif %}
+    </div>
+{% endblock %}

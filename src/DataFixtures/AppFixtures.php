@@ -23,16 +23,16 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         //Citation
-        for ($i = 0; $i < 10; $i++)
+        for ($i = 0; $i < 25; $i++)
         {
             $citation = new Citation();
-            $citation->setFrench($this->faker->text(300))
-                    ->setEnglish($this->faker->text(300))
+            $citation->setFrench($this->faker->text(69))
+                    ->setEnglish($this->faker->text(69))
                     ->setAuthor($this->faker->name());
 
             $manager->persist($citation);
         }
-        
+
         $manager->flush();
     }
 }
