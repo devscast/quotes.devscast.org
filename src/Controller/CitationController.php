@@ -72,6 +72,14 @@ class CitationController extends AbstractController
         ]);
     }
 
+    /**
+     * This function allow us to create a new citation
+     *
+     * @param Citation $citation
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route('/citation/edit/{id}', name: 'citation.edit', methods: ['GET' ,'POST'])]
     public function edit(Citation $citation, Request $request, EntityManagerInterface $manager): Response
     {
@@ -99,6 +107,13 @@ class CitationController extends AbstractController
         ]);
     }
 
+    /**
+     *This function allow us to delete a citation
+     *
+     * @param EntityManagerInterface $manager
+     * @param Citation $citation
+     * @return Response
+     */
     #[Route('/citation/delete/{id}', name: 'citation.delete', methods: ['GET', 'POST'])]
     public function delete(EntityManagerInterface $manager, Citation $citation): Response
     {

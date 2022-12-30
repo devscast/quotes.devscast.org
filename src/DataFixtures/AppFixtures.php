@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Author;
 use App\Entity\Citation;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -23,6 +24,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         //Citation
+        //$citations = [];
         for ($i = 0; $i < 25; $i++)
         {
             $citation = new Citation();
@@ -30,7 +32,19 @@ class AppFixtures extends Fixture
                     ->setEnglish($this->faker->text(69))
                     ->setAuthor($this->faker->name());
 
+           // $citations[] = $citation;
             $manager->persist($citation);
+        }
+
+        //Authors
+        for ($j = 0; $j < 25; $j++)
+        {
+            $author = new Author();
+            $author->setName($this->faker->name())
+                    ->setDescription($this->faker->text(69))
+                    ->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+
+            $manager->persist($author);
         }
 
         $manager->flush();

@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AuthorRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[UniqueEntity('name')]
 class Author
 {
@@ -23,15 +24,18 @@ class Author
     #[Assert\NotBlank()]
     private ?string $name;
 
-    #[ORM\Column]
-    private array $roles = [];
-
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
     #[ORM\Column]
+    private array $roles = [];
+
+    #[ORM\Column]
     #[Assert\NotNull()]
     private ?DateTimeImmutable $createdAt;
+
+    #[ORM\Column]
+    private ?DateTimeImmutable $updatedAt;
 
     /**
      * Constructor
@@ -39,6 +43,13 @@ class Author
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
+    }
+
+    #[ORM\PrePersist]
+    public function setUpdatedAtValue(): void
+    {
+        $this->updatedAt = new DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -58,6 +69,18 @@ class Author
         return $this;
     }
 
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -69,18 +92,6 @@ class Author
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
 
         return $this;
     }
@@ -100,5 +111,17 @@ class Author
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getUpdatedAt(): ?DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 }

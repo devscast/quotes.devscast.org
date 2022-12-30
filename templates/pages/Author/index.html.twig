@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Devscast - Auteurs!{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        {% if not authors.items is same as([]) %}
+            <h1>Auteurs</h1>
+
+             <a href="{{ path('author.new') }}" class="btn btn-primary mt-4">
+                Créer un auteur
+            </a>
+
+            {# read and display just one flash message type #}
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success mt-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            <table class="table mt-4">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Date created</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for author in authors %}
+                    <tr class="table-primary">
+                        <th scope="row">{{ author.id }}</th>
+                        <td>{{ author.name }}</td>
+                        <td>{{ author.description }}</td>
+                        <td>{{ author.createdAt|date("d/m/Y") }}</td>
+                        <td>
+                            <a href="{{ path('author.edit', { id: author.id }) }}" class="btn btn-info">
+                                Edit
+                            </a>
+
+                        </td>
+                        <td>
+                            <a href="{{ path('author.delete', { id: author.id }) }}" class="btn btn-danger">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            {# display navigation #}
+            <div class="navigation d-flex justify-content-center mt-4">
+                {{ knp_pagination_render(authors) }}
+            </div>
+        {% else %}
+            <h4>Il n'y a pas des auteurs</h4>
+        {% endif %}
+    </div>
+{% endblock %}
+
