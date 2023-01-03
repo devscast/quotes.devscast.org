@@ -4,10 +4,12 @@ namespace App\DataFixtures;
 
 use App\Entity\Author;
 use App\Entity\Citation;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
@@ -45,6 +47,18 @@ class AppFixtures extends Fixture
                     ->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
 
             $manager->persist($author);
+        }
+
+        //User
+        for ($i = 0; $i < 1; $i++)
+        {
+            $user = new User();
+            $user->setFullName($this->faker->name())
+                ->setEmail($this->faker->email())
+                ->setRoles(['ROLE_USER'])
+                ->setPlainPassword('password');
+
+            $manager->persist($user);
         }
 
         $manager->flush();
