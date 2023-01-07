@@ -50,12 +50,21 @@ class AppFixtures extends Fixture
         }
 
         //User
+
+        $admin = new User();
+        $admin->setFullName('Administrateur de Devsquotes-Backend')
+                ->setEmail('admin@devscast.tech')
+                ->setRoles(['ROLE_USER', 'ROLE_ADMIN'])
+                ->setPlainPassword('password');
+
+        $manager->persist($admin);
+
         for ($i = 0; $i < 1; $i++)
         {
             $user = new User();
             $user->setFullName($this->faker->name())
                 ->setEmail($this->faker->email())
-                ->setRoles(['ROLE_USER'])
+                ->setRoles(['ROLE_USER', 'ROLE_ADMIN'])
                 ->setPlainPassword('password');
 
             $manager->persist($user);
