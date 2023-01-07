@@ -25,6 +25,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">French</th>
                     <th scope="col">English</th>
+                    <th scope="col">Author</th>
                     <th scope="col">Date</th>
                     <th scope="col">Edit</th>
                     <th scope="col">Delete</th>
@@ -36,6 +37,7 @@
                         <th scope="row">{{ citation.id }}</th>
                         <td>{{ citation.french }}</td>
                         <td>{{ citation.english }}</td>
+                        <td>{{ citation.author }}</td>
                         <td>{{ citation.createdAt|date("d/m/Y") }}</td>
                         <td>
                             <a href="{{ path('citation.edit', { id: citation.id }) }}" class="btn btn-info">
