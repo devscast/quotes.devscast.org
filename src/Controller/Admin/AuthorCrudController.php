@@ -35,7 +35,8 @@ class AuthorCrudController extends AbstractCrudController
             IdField::new('id')
                 ->hideOnForm(),
             TextField::new('name'),
-            TextEditorField::new('description'),
+            TextField::new('description'),
+            TextField::new('roles'),
             DateTimeField::new('createdAt')
                 ->hideOnForm()
                 ->setFormTypeOption('disabled', 'disabled'),

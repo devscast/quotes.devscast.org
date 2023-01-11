@@ -24,17 +24,18 @@ class Author
     #[Assert\NotBlank()]
     private ?string $name;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: 'text', nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column]
-    private array $roles = [];
+    private ?string $roles;
 
     #[ORM\Column]
     #[Assert\NotNull()]
     private ?DateTimeImmutable $createdAt;
 
     #[ORM\Column]
+    #[Assert\NotNull()]
     private ?DateTimeImmutable $updatedAt;
 
     /**
@@ -81,15 +82,12 @@ class Author
         return $this;
     }
 
-    public function getRoles(): array
+    public function getRoles(): string
     {
-        $roles = $this->roles;
-        $roles[] ='ROLE_USER';
-
-        return array_unique($roles);
+        return $this->roles;
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(string $roles): self
     {
         $this->roles = $roles;
 

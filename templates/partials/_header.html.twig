@@ -11,11 +11,11 @@
 				</li>
 				{% if app.user %}
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('index.citation') }}">Citations</a>
+						<a class="nav-link" href="#"></a>
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('author.index') }}">Authors</a>
+						<a class="nav-link" href="#"></a>
 					</li>
 				{% endif %}
 			</ul>
@@ -23,20 +23,20 @@
 			<div class="d-flex">
 				<ul class="navbar-nav me-auto">
 					{% if app.user %}
-					<li class="nav-item dropdown" style="margin-right: 2rem;">
-						<a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-						   role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.fullName }}
-						</a>
-						<div class="dropdown-menu">
-							<div class="dropdown-divider"></div>
-							{% if 'ROLE_ADMIN' in app.user.roles %}
-								<a class="dropdown-item" href="{{ path('admin.index') }}">Administration</a>
+						<li class="nav-item dropdown" style="margin-right: 2rem;">
+							<a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+							   role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.fullName }}
+							</a>
+							<div class="dropdown-menu">
 								<div class="dropdown-divider"></div>
-							{% endif %}
+								{% if 'ROLE_ADMIN' in app.user.roles %}
+									<a class="dropdown-item" href="{{ path('admin.index') }}">Admin</a>
+									<div class="dropdown-divider"></div>
+								{% endif %}
 
-							<a class="dropdown-item" href="{{ path('security.logout') }}">Déconnexion</a>
-						</div>
-					</li>
+								<a class="dropdown-item" href="{{ path('security.logout') }}">Déconnexion</a>
+							</div>
+						</li>
 					{% else %}
 						<li class="nav-item">
 							<a class="nav-link" href="{{ path('security.login') }}">Connexion</a>
@@ -44,11 +44,6 @@
 					{% endif %}
 				</ul>
 			</div>
-
-			<form class="d-flex" role="search">
-				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-				<button class="btn btn-outline-success" type="submit">Search</button>
-			</form>
 		</div>
 
 	</div>

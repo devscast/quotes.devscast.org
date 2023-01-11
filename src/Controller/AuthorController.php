@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Author;
-use App\Entity\Citation;
 use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,16 +17,17 @@ class AuthorController extends AbstractController
     /**
      * This function display all authors
      *
-     * @param AuthorRepository $repository
+     * @param AuthorRepository $authorRepository
      * @param Request $request
      * @param PaginatorInterface $paginator
      * @return Response
      */
     #[Route('/author', name: 'author.index', methods: ['GET', 'POST'])]
-    public function index(AuthorRepository $repository, Request $request, PaginatorInterface $paginator): Response
+    public function index(AuthorRepository $authorRepository, Request $request, PaginatorInterface $paginator): Response
     {
+
         $authors = $paginator->paginate(
-            $repository->findAll(), /* query NOT result */
+            $authorRepository->findAll(), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             10 /*limit per page*/
         );

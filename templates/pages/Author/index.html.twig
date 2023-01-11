@@ -25,6 +25,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Description</th>
+                    <th scope="col">Roles</th>
                     <th scope="col">Date created</th>
                     <th scope="col">Edit</th>
                     <th scope="col">Delete</th>
@@ -36,15 +37,16 @@
                         <th scope="row">{{ author.id }}</th>
                         <td>{{ author.name }}</td>
                         <td>{{ author.description }}</td>
+                        <td>{{ author.roles }}</td>
                         <td>{{ author.createdAt|date("d/m/Y") }}</td>
                         <td>
-                            <a href="{{ path('author.edit', { id: author.id }) }}" class="btn btn-info">
+                            <a href="{{ path('author.edit', { id: author.id }) }}" onclick="return confirm('Voulez-vous vraiment modifier l\'auteur ?')" class="btn btn-info">
                                 Edit
                             </a>
 
                         </td>
                         <td>
-                            <a href="{{ path('author.delete', { id: author.id }) }}" class="btn btn-danger">
+                            <a href="{{ path('author.delete', { id: author.id }) }}" onclick="return confirm('Voulez-vous vraiment supprimer l\'auteur ?')" class="btn btn-danger">
                                 Delete
                             </a>
                         </td>

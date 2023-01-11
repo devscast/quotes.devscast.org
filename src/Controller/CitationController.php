@@ -17,17 +17,17 @@ class CitationController extends AbstractController
     /**
      *  This function display all citations
      *
-     * @param CitationRepository $repository
+     * @param CitationRepository $citationRepository
      * @param PaginatorInterface $paginator
      * @param Request $request
      * @return Response
      */
     #[Route('/citation', name: 'index.citation', methods: ['GET'])]
-    public function index(CitationRepository $repository, PaginatorInterface $paginator, Request $request): Response
+    public function index(CitationRepository $citationRepository, PaginatorInterface $paginator, Request $request): Response
     {
 
         $citations = $paginator->paginate(
-            $repository->findAll(), /* query NOT result */
+            $citationRepository->findAll(), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             10 /*limit per page*/
         );

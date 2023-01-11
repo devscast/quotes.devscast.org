@@ -35,8 +35,8 @@ class CitationCrudController extends AbstractCrudController
             IdField::new('id')
                 ->hideOnForm(),
             TextField::new('french'),
-            TextEditorField::new('english'),
-            TextEditorField::new('author'),
+            TextField::new('english'),
+            TextField::new('author'),
             DateTimeField::new('createdAt')
                 ->hideOnForm()
                 ->setFormTypeOption('disabled', 'disabled'),

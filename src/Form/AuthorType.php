@@ -40,6 +40,15 @@ class AuthorType extends AbstractType
                     'class' => 'form-label mt-4'
                 ]
             ])
+            ->add('roles', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'Roles',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ]
+            ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary mt-4'

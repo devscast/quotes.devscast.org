@@ -40,12 +40,12 @@
                         <td>{{ citation.author }}</td>
                         <td>{{ citation.createdAt|date("d/m/Y") }}</td>
                         <td>
-                            <a href="{{ path('citation.edit', { id: citation.id }) }}" class="btn btn-info">
+                            <a href="{{ path('citation.edit', { id: citation.id }) }}" onclick="return confirm('Voulez-vous vraiment modifier la cittaion ?')" class="btn btn-info">
                                 Edit
                             </a>
                         </td>
                         <td>
-                            <a href="{{ path('citation.delete', { id: citation.id }) }}" class="btn btn-danger">
+                            <a href="{{ path('citation.delete', { id: citation.id }) }}" onclick="return confirm('Voulez-vous vraiment supprimer la cittaion ?')" class="btn btn-danger">
                                 Delete
                             </a>
                         </td>
