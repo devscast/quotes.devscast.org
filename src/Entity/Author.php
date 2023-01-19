@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\AuthorRepository;
+use App\Repository\CitationRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -24,10 +27,10 @@ class Author
     #[Assert\NotBlank()]
     private ?string $name;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column]
+    #[ORM\Column(length: 255)]
     private ?string $roles;
 
     #[ORM\Column]
@@ -47,10 +50,10 @@ class Author
         $this->updatedAt = new DateTimeImmutable();
     }
 
-    #[ORM\PrePersist]
+   #[ORM\PrePersist]
     public function setUpdatedAtValue(): void
-    {
-        $this->updatedAt = new DateTimeImmutable();
+   {
+       $this->updatedAt = new DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -70,19 +73,7 @@ class Author
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getRoles(): string
+    public function getRoles(): ?string
     {
         return $this->roles;
     }
@@ -90,6 +81,18 @@ class Author
     public function setRoles(string $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
@@ -106,11 +109,6 @@ class Author
         return $this;
     }
 
-    public function __toString(): string
-    {
-        return $this->name;
-    }
-
     public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
@@ -122,4 +120,10 @@ class Author
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
 }

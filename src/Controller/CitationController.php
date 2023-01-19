@@ -54,6 +54,7 @@ class CitationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         {
             $citation = $form->getData();
+            //$citation->setUser($this->getUser());
 
             $manager->persist($citation);
             $manager->flush();

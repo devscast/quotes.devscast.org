@@ -24,8 +24,18 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        //User
+        //$admins = [];
+        $admin = new User();
+        $admin->setFullName('Admin')
+            ->setEmail('admin@devscast.tech')
+            ->setRoles(['ROLE_USER', 'ROLE_ADMIN'])
+            ->setPlainPassword('password');
+
+        //$admins[] = $admin;
+        $manager->persist($admin);
+
         //Citation
-        //$citations = [];
         for ($i = 0; $i < 15; $i++)
         {
             $citation = new Citation();
@@ -33,29 +43,20 @@ class AppFixtures extends Fixture
                     ->setEnglish($this->faker->text(69))
                     ->setAuthor($this->faker->name());
 
-           // $citations[] = $citation;
             $manager->persist($citation);
         }
 
-        //Authors
+        //Author
         for ($j = 0; $j < 15; $j++)
         {
             $author = new Author();
-            $author->setName($this->faker->name())
+            $author->setName($this->faker->word())
                     ->setDescription($this->faker->text(69))
                     ->setRoles($this->faker->title());
 
             $manager->persist($author);
         }
 
-        //User
-        $admin = new User();
-        $admin->setFullName('Admin')
-                ->setEmail('admin@devscast.tech')
-                ->setRoles(['ROLE_USER', 'ROLE_ADMIN'])
-                ->setPlainPassword('password');
-
-        $manager->persist($admin);
         $manager->flush();
     }
 }

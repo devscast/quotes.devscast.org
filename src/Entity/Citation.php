@@ -4,10 +4,9 @@ namespace App\Entity;
 
 use App\Repository\CitationRepository;
 use DateTimeImmutable;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CitationRepository::class)]
@@ -31,7 +30,6 @@ class Citation
     #[ORM\Column(length: 50)]
     #[Assert\NotNull()]
     private ?string $author;
-
     #[ORM\Column]
     #[Assert\NotNull()]
     private ?DateTimeImmutable $createdAt;
@@ -39,6 +37,7 @@ class Citation
     /**
      * Constructor
      */
+
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
@@ -102,5 +101,4 @@ class Citation
     {
         return $this->author;
     }
-
 }
