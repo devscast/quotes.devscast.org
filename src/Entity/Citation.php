@@ -2,42 +2,51 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\CitationRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinColumn;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CitationRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection()
+    ]
+)]
 class Citation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotNull()]
     #[Assert\NotBlank()]
-    private ?string $french;
+    private ?string $french = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotNull()]
     #[Assert\NotBlank()]
-    private ?string $english;
+    private ?string $english = null;
 
-    #[ORM\Column(length: 50)]
-    #[Assert\NotNull()]
-    private ?string $author;
+
+    #[ORM\ManyToOne(inversedBy: 'citations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Author $author = null;
+
     #[ORM\Column]
     #[Assert\NotNull()]
-    private ?DateTimeImmutable $createdAt;
+    private ?DateTimeImmutable $createdAt = null;
 
     /**
      * Constructor
      */
-
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
@@ -73,12 +82,12 @@ class Citation
         return $this;
     }
 
-    public function getAuthor(): ?string
+    public function getAuthor(): ?Author
     {
         return $this->author;
     }
 
-    public function setAuthor(string $author): self
+    public function setAuthor(Author $author): self
     {
         $this->author = $author;
 

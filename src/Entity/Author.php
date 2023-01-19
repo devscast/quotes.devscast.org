@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\AuthorRepository;
-use App\Repository\CitationRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,31 +17,40 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: AuthorRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[UniqueEntity('name')]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection()
+    ]
+)]
 class Author
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id;
+    private ?int $id = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\Length(min: 2, max: 50)]
     #[Assert\NotBlank()]
-    private ?string $name;
+    private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $roles;
+    private ?string $roles = null;
 
     #[ORM\Column]
     #[Assert\NotNull()]
-    private ?DateTimeImmutable $createdAt;
+    private DateTimeImmutable $createdAt;
 
     #[ORM\Column]
     #[Assert\NotNull()]
     private ?DateTimeImmutable $updatedAt;
+
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Citation::class)]
+    private Collection $citations;
 
     /**
      * Constructor
@@ -48,6 +59,7 @@ class Author
     {
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
+        $this->citations = new ArrayCollection();
     }
 
    #[ORM\PrePersist]
@@ -124,6 +136,35 @@ class Author
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection<int, Citation>
+     */
+    public function getCitations(): Collection
+    {
+        return $this->citations;
+    }
+
+    public function addCitation(Citation $citation): self
+    {
+        if (!$this->citations->contains($citation)) {
+            $this->citations->add($citation);
+            $citation->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCitation(Citation $citation): self
+    {
+        if ($this->citations->removeElement($citation)) {
+            if ($citation->getAuthor() === $this) {
+                $this->citations->remove($citation);
+            }
+        }
+
+        return $this;
     }
 
 }
