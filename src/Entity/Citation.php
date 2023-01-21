@@ -10,6 +10,7 @@ use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: CitationRepository::class)]
 #[ApiResource(
@@ -21,20 +22,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Citation
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue('CUSTOM')]
+    #[ORM\Column(type: 'uuid', unique: true)]
+    #[ORM\CustomIdGenerator('doctrine.uuid_generator')]
+    private ?string $id = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotNull()]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Assert\NotBlank()]
     private ?string $french = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotNull()]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Assert\NotBlank()]
     private ?string $english = null;
-
 
     #[ORM\ManyToOne(inversedBy: 'citations')]
     #[ORM\JoinColumn(nullable: false)]
@@ -53,7 +52,8 @@ class Citation
     }
 
 
-    public function getId(): ?int
+
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -75,7 +75,7 @@ class Citation
         return $this->english;
     }
 
-    public function setEnglish(string $english): self
+    public function setEnglish(?string $english): self
     {
         $this->english = $english;
 
@@ -87,12 +87,13 @@ class Citation
         return $this->author;
     }
 
-    public function setAuthor(Author $author): self
+    public function setAuthor(?Author $author): self
     {
         $this->author = $author;
 
         return $this;
     }
+
 
     public function getCreatedAt(): ?DateTimeImmutable
     {
@@ -110,4 +111,5 @@ class Citation
     {
         return $this->author;
     }
+
 }

@@ -10,22 +10,22 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230119080915 extends AbstractMigration
+final class Version20230121225855 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Création de l\entitté Citation';
+        return 'Creation de l\entité Citation';
     }
 
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE citation ADD created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', CHANGE authors_id authors_id INT NOT NULL');
+        $this->addSql('CREATE TABLE citation (id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', french LONGTEXT DEFAULT NULL, english LONGTEXT DEFAULT NULL, created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE citation DROP created_at, CHANGE authors_id authors_id INT DEFAULT NULL');
+        $this->addSql('DROP TABLE citation');
     }
 }

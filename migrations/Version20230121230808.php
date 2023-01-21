@@ -10,19 +10,17 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230119100525 extends AbstractMigration
+final class Version20230121230808 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Relation between Author and Citation';
     }
 
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE citation DROP FOREIGN KEY FK_FABD9C7E6DE2013A');
-        $this->addSql('DROP INDEX IDX_FABD9C7E6DE2013A ON citation');
-        $this->addSql('ALTER TABLE citation DROP author, CHANGE authors_id author_id INT NOT NULL');
+        $this->addSql('ALTER TABLE citation ADD author_id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\'');
         $this->addSql('ALTER TABLE citation ADD CONSTRAINT FK_FABD9C7EF675F31B FOREIGN KEY (author_id) REFERENCES author (id)');
         $this->addSql('CREATE INDEX IDX_FABD9C7EF675F31B ON citation (author_id)');
     }
@@ -32,8 +30,6 @@ final class Version20230119100525 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE citation DROP FOREIGN KEY FK_FABD9C7EF675F31B');
         $this->addSql('DROP INDEX IDX_FABD9C7EF675F31B ON citation');
-        $this->addSql('ALTER TABLE citation ADD author VARCHAR(50) NOT NULL, CHANGE author_id authors_id INT NOT NULL');
-        $this->addSql('ALTER TABLE citation ADD CONSTRAINT FK_FABD9C7E6DE2013A FOREIGN KEY (authors_id) REFERENCES author (id)');
-        $this->addSql('CREATE INDEX IDX_FABD9C7E6DE2013A ON citation (authors_id)');
+        $this->addSql('ALTER TABLE citation DROP author_id');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Citation;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -36,7 +37,7 @@ class CitationCrudController extends AbstractCrudController
                 ->hideOnForm(),
             TextField::new('french'),
             TextField::new('english'),
-            TextField::new('author'),
+            AssociationField::new('author'),
             DateTimeField::new('createdAt')
                 ->hideOnForm()
                 ->setFormTypeOption('disabled', 'disabled'),

@@ -13,9 +13,9 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: AuthorRepository::class)]
-#[ORM\HasLifecycleCallbacks]
 #[UniqueEntity('name')]
 #[ApiResource(
     operations: [
@@ -26,30 +26,31 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Author
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue('CUSTOM')]
+    #[ORM\Column(type: 'uuid', unique: true)]
+    #[ORM\CustomIdGenerator('doctrine.uuid_generator')]
+    private ?string $id = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\Length(min: 2, max: 50)]
     #[Assert\NotBlank()]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
     private ?string $roles = null;
 
     #[ORM\Column]
     #[Assert\NotNull()]
-    private DateTimeImmutable $createdAt;
+    private ?DateTimeImmutable $createdAt;
 
     #[ORM\Column]
     #[Assert\NotNull()]
     private ?DateTimeImmutable $updatedAt;
 
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Citation::class)]
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Citation::class, orphanRemoval: true)]
     private Collection $citations;
 
     /**
@@ -62,13 +63,13 @@ class Author
         $this->citations = new ArrayCollection();
     }
 
-   #[ORM\PrePersist]
-    public function setUpdatedAtValue(): void
-   {
-       $this->updatedAt = new DateTimeImmutable();
+    #[ORM\PreUpdate]
+    public function preUpdate(): void
+    {
+        $this->updatedAt = new DateTimeImmutable();
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -85,6 +86,18 @@ class Author
         return $this;
     }
 
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
     public function getRoles(): ?string
     {
         return $this->roles;
@@ -93,18 +106,6 @@ class Author
     public function setRoles(string $roles): self
     {
         $this->roles = $roles;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
 
         return $this;
     }
@@ -166,5 +167,4 @@ class Author
 
         return $this;
     }
-
 }
