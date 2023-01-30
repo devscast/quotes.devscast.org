@@ -50,7 +50,7 @@ class Author
     #[Assert\NotNull()]
     private ?DateTimeImmutable $updatedAt;
 
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Citation::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Citation::class)]
     private Collection $citations;
 
     /**
@@ -68,6 +68,7 @@ class Author
     {
         $this->updatedAt = new DateTimeImmutable();
     }
+
 
     public function getId(): ?string
     {
@@ -110,6 +111,35 @@ class Author
         return $this;
     }
 
+    /**
+     * @return Collection<int, Citation>
+     */
+    public function getCitations(): Collection
+    {
+        return $this->citations;
+    }
+
+    public function addCitation(Citation $citation): self
+    {
+        if (!$this->citations->contains($citation)) {
+            $this->citations->add($citation);
+            $citation->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCitation(Citation $citation): self
+    {
+        if ($this->citations->removeElement($citation)) {
+            if ($citation->getAuthor() === $this) {
+                $this->citations->remove($citation);
+            }
+        }
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
@@ -139,32 +169,4 @@ class Author
         return $this->name;
     }
 
-    /**
-     * @return Collection<int, Citation>
-     */
-    public function getCitations(): Collection
-    {
-        return $this->citations;
-    }
-
-    public function addCitation(Citation $citation): self
-    {
-        if (!$this->citations->contains($citation)) {
-            $this->citations->add($citation);
-            $citation->setAuthor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCitation(Citation $citation): self
-    {
-        if ($this->citations->removeElement($citation)) {
-            if ($citation->getAuthor() === $this) {
-                $this->citations->remove($citation);
-            }
-        }
-
-        return $this;
-    }
 }

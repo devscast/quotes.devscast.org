@@ -10,11 +10,11 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230121224944 extends AbstractMigration
+final class Version20230130104657 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Creation de l\entité Author';
+        return 'Creation de l\'entité Author';
     }
 
     public function up(Schema $schema): void

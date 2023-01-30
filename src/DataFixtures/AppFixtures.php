@@ -47,6 +47,7 @@ class AppFixtures extends Fixture
             $citation = new Citation();
             $citation->setFrench($this->faker->text(69))
                     ->setEnglish($this->faker->text(69))
+                    ->setUniqueHash($this->faker->md5())
                     ->setAuthor($author);
 
             $manager->persist($author);

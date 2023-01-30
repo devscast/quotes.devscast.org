@@ -27,21 +27,24 @@ class Citation
     #[ORM\CustomIdGenerator('doctrine.uuid_generator')]
     private ?string $id = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
     private ?string $french = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
     private ?string $english = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $unique_hash;
+
     #[ORM\ManyToOne(inversedBy: 'citations')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Author $author = null;
 
     #[ORM\Column]
     #[Assert\NotNull()]
-    private ?DateTimeImmutable $createdAt = null;
+    private ?DateTimeImmutable $createdAt;
+
 
     /**
      * Constructor
@@ -50,8 +53,6 @@ class Citation
     {
         $this->createdAt = new DateTimeImmutable();
     }
-
-
 
     public function getId(): ?string
     {
@@ -75,9 +76,23 @@ class Citation
         return $this->english;
     }
 
-    public function setEnglish(?string $english): self
+    public function setEnglish(string $english): self
     {
         $this->english = $english;
+
+        return $this;
+    }
+
+    public function getUniqueHash(): ?string
+    {
+        $this->unique_hash = md5(strtolower(str_replace(' ', '', $this->english)));
+
+        return $this->unique_hash;
+    }
+
+    public function setUniqueHash(string $unique_hash): self
+    {
+        $this->unique_hash = $unique_hash;
 
         return $this;
     }
@@ -86,14 +101,12 @@ class Citation
     {
         return $this->author;
     }
-
     public function setAuthor(?Author $author): self
     {
         $this->author = $author;
 
         return $this;
     }
-
 
     public function getCreatedAt(): ?DateTimeImmutable
     {
