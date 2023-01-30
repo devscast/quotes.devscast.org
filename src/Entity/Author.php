@@ -45,10 +45,7 @@ class Author
     #[ORM\Column]
     #[Assert\NotNull()]
     private ?DateTimeImmutable $createdAt;
-
-    #[ORM\Column]
-    #[Assert\NotNull()]
-    private ?DateTimeImmutable $updatedAt;
+    private DateTimeImmutable $updatedAt;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Citation::class)]
     private Collection $citations;
@@ -61,12 +58,6 @@ class Author
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
         $this->citations = new ArrayCollection();
-    }
-
-    #[ORM\PreUpdate]
-    public function preUpdate(): void
-    {
-        $this->updatedAt = new DateTimeImmutable();
     }
 
 

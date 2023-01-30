@@ -39,12 +39,12 @@ class Citation
     private ?string $unique_hash;
 
     #[ORM\ManyToOne(inversedBy: 'citations')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Author $author = null;
 
     #[ORM\Column]
     #[Assert\NotNull()]
     private ?DateTimeImmutable $createdAt;
-
 
     /**
      * Constructor
@@ -73,6 +73,8 @@ class Citation
 
     public function getEnglish(): ?string
     {
+        $this->unique_hash = md5(strtolower(str_replace(' ', '', $this->english)));
+
         return $this->english;
     }
 
@@ -85,8 +87,6 @@ class Citation
 
     public function getUniqueHash(): ?string
     {
-        $this->unique_hash = md5(strtolower(str_replace(' ', '', $this->english)));
-
         return $this->unique_hash;
     }
 
@@ -101,6 +101,7 @@ class Citation
     {
         return $this->author;
     }
+
     public function setAuthor(?Author $author): self
     {
         $this->author = $author;
