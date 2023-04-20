@@ -22,10 +22,9 @@ use Symfony\Component\Uid\Uuid;
 class Citation
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue('CUSTOM')]
-    #[ORM\Column(type: 'uuid', unique: true)]
-    #[ORM\CustomIdGenerator('doctrine.uuid_generator')]
-    private ?string $id = null;
+    #[ORM\GeneratedValue()]
+    #[ORM\Column()]
+    private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
@@ -54,7 +53,7 @@ class Citation
         $this->createdAt = new DateTimeImmutable();
     }
 
-    public function getId(): ?string
+    public function getId(): ?int
     {
         return $this->id;
     }
