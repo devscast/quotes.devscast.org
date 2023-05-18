@@ -14,6 +14,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 /**
  * Class CitationCrudController
+ *
+ *
  * @author Tresor-ilunga <ilungat82@gmail.com>
  */
 class CitationCrudController extends AbstractCrudController
