@@ -1,23 +1,24 @@
 # Devsquotes-backend
 
-DevsQuotes est une application web permettant de partager des citations de développeurs.
+DevsQuotes is a web application to share quotes from developers.
 
-## Environnement de développement
+## Environment of development
 
-### Pré-requis
+### Prerequisites
 
 * PHP 8.1
 * Composer
 * Symfony CLI
+* Docker and Docker-compose
 
-Vous pouvez vérifier les pré-requis (sauf Docker et Docker-compose) avec la commande suivante (de la CLI Symfony) : 
+You can check the prerequisites (except Docker and Docker-compose) with the following command (from the Symfony CLI):
 
 ```bash
 symfony check:requirements
 ```
 
-### Lancer l'environnement de développement
+### Start the development environment
 
 ```bash
-symfony serve -d
+docker-compose up -d
 ```

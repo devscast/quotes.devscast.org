@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\Author;
@@ -10,6 +12,11 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 
+/**
+ * Class AppFixtures
+ *
+ * @author tresor-ilunga <ilungat82@gmail.com>
+ */
 class AppFixtures extends Fixture
 {
     /**

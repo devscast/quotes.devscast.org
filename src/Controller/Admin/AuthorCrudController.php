@@ -13,6 +13,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 /**
  * Class AuthorCrudController
+ *
+ *
  * @author Tresor-ilunga <ilungat82@gmail.com>
  */
 class AuthorCrudController extends AbstractCrudController
