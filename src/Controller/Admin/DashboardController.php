@@ -17,7 +17,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 /**
  * Class DashboardController
  *
- *
  * @author Tresor-ilunga <ilungat82@gmail.com>
  */
 class DashboardController extends AbstractDashboardController

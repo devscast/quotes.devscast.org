@@ -45,8 +45,8 @@ class SecurityController extends AbstractController
      * @return void
      */
      #[Route('logout', name:'security.logout', methods: ['GET', 'POST'])]
-    public function logout()
-    {
+    public function logout(): void
+     {
         // Nothing to do here..
     }
 }

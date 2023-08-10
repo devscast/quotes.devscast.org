@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class AuthorType
+ *
  * @author Tresor-ilunga <ilungat82@gmail.com>
  */
 class AuthorType extends AbstractType

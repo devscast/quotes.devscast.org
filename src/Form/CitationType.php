@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class CitationType
+ *
  *  @author Tresor-ilunga <ilungat82@gmail.com>
  */
 class CitationType extends AbstractType
